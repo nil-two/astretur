@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>Ast-Retur</title>
+  <link rel="stylesheet" href="css/html5reset-1.6.1.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="header">
+    <h1 class="title">PSO2 特殊能力シュミレータ</h1>
+  </header>
+  <main class="main">
+    <div class="app" id="app"></div>
+  </main>
+  <script id="template" type="text/ractive">
+    <div class="app-left-side">
+      <div class="pane source-pane">
+        <div class="pane-header">
+          <span class="pane-title">特殊能力一覧</span>
+        </div>
+        <div class="pane-body source-pane-body">
+          <ul class="source-category-list">
+            {{#each categories:ci}}
+            <li class="source-category">
+              <p class="source-category-name" on-click="@this.toggleCategory(ci)">{{name}}</p>
+              <ul class="source-option-list{{opened ? '' : '-closed'}}">
+                {{#each options}}
+                <li class="source-option" on-click="@this.addOption(this)">{{name}}</li>
+                {{/each}}
+              </ul>
+            </li>
+            {{/each}}
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="app-right-side">
+      <div class="pane selection-pane">
+        <div class="pane-header">
+          <span class="pane-title">選択した特殊能力</span>
+          /
+          <span class="clip-options-button">URL</span>
+        </div>
+        <div class="pane-body selection-pane-body">
+          <p class="selected-option-target">武器</p>
+          <ul class="selected-option-list">
+            {{#each selectedOptions:oi}}
+            <li class="selected-option" on-click="@this.removeOption(oi)"><p>{{name}}</p></li>
+            {{/each}}
+          </ul>
+        </div>
+      </div>
+      <div class="pane result-pane">
+        <div class="pane-header">
+          <span class="pane-title">ステータス変化</span>
+        </div>
+        <div class="pane-body result-pane-body">
+          <ul class="stat-list-list">
+            <li class="stat-list-list-item">
+              <ul class="stat-list">
+                {{#each stats}}
+                <li class="stat">
+                  <span class="stat-name">{{name}}</span>
+                  <span class="stat-value">{{sumOfEffect(key)}}</span>
+                </li>
+                {{/each}}
+              </ul>
+            </li>
+            <li class="stat-list-list-item">
+              <ul class="stat-list">
+                {{#each resists}}
+                <li class="stat">
+                  <span class="stat-name">{{name}}</span>
+                  <span class="stat-value">{{sumOfEffect(key)}}</span>
+                </li>
+                {{/each}}
+              </ul>
+            </li>
+            <li class="stat-list-list-item">
+              <ul class="extra-list">
+                <li class="extra-title">その他</li>
+                {{#each extraEffects()}}
+                <li class="extra">
+                  <span class="extra-value">{{.}}</span>
+                </li>
+                {{/each}}
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.16/clipboard.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ractive/0.9.0-build-69/ractive.js"></script>
+  <script src="js/astretur.js"></script>
+</body>
+</html>
