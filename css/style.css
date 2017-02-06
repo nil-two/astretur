@@ -6,17 +6,18 @@ html {
 body {
   display: flex;
   height: 100%;
+  background: url('../asset/brickwall.png'); /* Background pattern from Subtle Patterns */
   flex-direction: column;
 }
 
 .header {
-  height: 3.3rem;
-  background: gray;
-  border-bottom: 1px solid #000000;
+  height: 3.0rem;
+  background: rgba(0, 0, 0, 0.2);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.3);
 }
 .title {
-  margin: 5px 0 0 0;
-  color: black;
+  display: block;
+  margin: 0.5rem;
   font-size: 2.0rem;
   text-align: center;
 }
@@ -33,7 +34,7 @@ body {
 }
 .app-left-side {
   width: 20.0rem;
-  border-right: 1px solid black;
+  border-right: 1px solid rgba(0, 0, 0, 0.3);
 }
 .app-right-side {
   display: flex;
@@ -45,15 +46,18 @@ body {
   height: 100%;
 }
 .pane-header {
-  border-bottom: 1px solid #000000;
-  background: gray;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+  background: rgba(0, 0, 0, 0.2);
   font-size: 1.6rem;
   line-height: 2.0rem;
 }
 .pane-title {
 }
+.pane-body {
+  background: rgba(0, 0, 0, 0.10);
+}
 .clip-options-button {
-  color: darkblue;
+  color: #005090;
   font-weight: bold;
   text-decoration: underline;
   -ms-user-select: none;
@@ -85,7 +89,7 @@ body {
   font-size: 1.6rem;
   line-height: 2.0rem;
   cursor: pointer;
-  background: darkgray;
+  background: rgba(0, 0, 0, 0.1);
   -ms-user-select: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -103,17 +107,16 @@ body {
   cursor: pointer;
 }
 .source-option:hover {
-  background: #bbbbff;
+  background: rgba(127, 207, 255, 0.15);
 }
 
 .selection-pane {
   height: 361px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.3);
 }
 .selection-header {
-  border-bottom: 1px solid #000000;
   font-size: 1.6rem;
   line-height: 2.0rem;
-  background: gray;
 }
 .selected-option-target {
   margin: 8px 0 0 21px;
@@ -126,11 +129,10 @@ body {
   margin: 3px 0 0 21px;
   list-style: none;
 }
-
 .selected-option {
   height: 3.3rem;
   width: 16.0rem;
-  border: 1px solid #000000;
+  border: 1px solid rgba(0, 0, 0, 0.3);
   border-top: 0;
   font-size: 1.4rem;
   line-height: 2.0rem;
@@ -143,18 +145,19 @@ body {
   user-select: none;
 }
 .selected-option:first-child {
-  border-top: 1px solid #000000;
+  border-top: 1px solid rgba(0, 0, 0, 0.3);
+}
+.selected-option:hover {
+  background: rgba(127, 207, 255, 0.15);
 }
 
 .result-pane {
-  border-top: 1px solid #000000;
   flex: 1;
 }
 .result-header {
-  border-bottom: 1px solid #000000;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.3);
   font-size: 1.6rem;
   line-height: 2.0rem;
-  background: gray;
 }
 .stat-list-list {
   display: flex;
@@ -166,8 +169,8 @@ body {
   list-style: none;
 }
 .stat {
-  width: 14.0rem;
-  border-bottom: 1px solid #000000;
+  width: 12.2rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.3);
   margin-bottom: 4px;
   margin-top: 10px;
 }
