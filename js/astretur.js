@@ -456,9 +456,6 @@
         }
         options[options.length - 1] = newEmptyOption();
     }
-    
-    function saveOptionsToClipboard(options) {
-    }
 
     var selectedOptionNamesFromURL = (urlParams["wpop"] || "").split(/,/);
     var defaultSelectedOptions = [];
