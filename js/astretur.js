@@ -37,6 +37,7 @@
 
     var allOptions = [
         {group: 1, name: "グンネ・ソール",         effects: {hp: 45, sAtk: 15}},
+        {group: 1, name: "ジグモル・ソール",       effects: {pp: 4, sAtk: 15}},
         {group: 1, name: "ヴォル・ソール",         effects: {hp: 20, sAtk: 30}},
         {group: 1, name: "グワナ・ソール",         effects: {hp: 10, pp: 2, sAtk: 30}},
         {group: 1, name: "クォーツ・ソール",       effects: {pp: 3, sAtk: 30}},
