@@ -429,7 +429,7 @@
             return false;
         }
         if (optionA.group === optionB.group) {
-            if (optionA.group === 8) {
+            if (optionA.group === 8 || optionA.group === 10) {
                 if (trimLevel(optionA.name) === trimLevel(optionB.name)) {
                     return true;
                 }
