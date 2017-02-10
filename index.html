@@ -23,7 +23,7 @@
           <ul class="source-category-list">
             {{#each categories:ci}}
             <li class="source-category">
-              <p class="source-category-name" on-click="@this.toggleCategory(ci)">{{name}}</p>
+              <p class="source-category-name" on-click="@this.toggleCategory(.)">{{name}}</p>
               <ul class="source-option-list{{opened ? '' : '-closed'}}">
                 {{#each options}}
                 <li class="source-option" on-click="@this.addOption(this)">{{name}}</li>
@@ -64,7 +64,7 @@
                 {{#each stats}}
                 <li class="stat">
                   <span class="stat-name">{{name}}</span>
-                  <span class="stat-value">{{sumOfEffect(key)}}</span>
+                  <span class="stat-value">{{sumOfEffects(key)}}</span>
                 </li>
                 {{/each}}
               </ul>
@@ -74,7 +74,7 @@
                 {{#each resists}}
                 <li class="stat">
                   <span class="stat-name">{{name}}</span>
-                  <span class="stat-value">{{sumOfEffect(key)}}</span>
+                  <span class="stat-value">{{sumOfEffects(key)}}</span>
                 </li>
                 {{/each}}
               </ul>
@@ -82,7 +82,7 @@
             <li class="stat-list-list-item">
               <ul class="extra-list">
                 <li class="extra-title">その他</li>
-                {{#each extraEffects()}}
+                {{#each extraEffects(selectedOptions)}}
                 <li class="extra">
                   <span class="extra-value">{{.}}</span>
                 </li>

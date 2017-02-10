@@ -1,7 +1,14 @@
 (function() {
-    var events = ['dragstart', 'dragenter', 'dragover', 'dragleave', 'drop', 'dragend']
+    var dndEvents = [
+        'dragstart',
+        'dragenter',
+        'dragover',
+        'dragleave',
+        'drop',
+        'dragend',
+    ];
 
-    function dragAndDropHandler(node, fire, event) {
+    function dndHandler(node, fire, event) {
         fire({
             node: node,
             type: event.type,
@@ -11,16 +18,16 @@
     }
 
     Ractive.events.dnd = function(node, fire) {
-        var handler = dragAndDropHandler.bind(null, node, fire);
+        var handler = dndHandler.bind(null, node, fire);
 
-        for (var i = 0; i < events.length; i++) {
-            node.addEventListener(events[i], handler);
+        for (var i = 0; i < dndEvents.length; i++) {
+            node.addEventListener(dndEvents[i], handler);
         }
 
         return {
             teardown: function() {
-                for (var i = 0; i < events.length; i++) {
-                    node.removeEventListener(events[i], handler);
+                for (var i = 0; i < dndEvents.length; i++) {
+                    node.removeEventListener(dndEvents[i], handler);
                 }
             }
         };

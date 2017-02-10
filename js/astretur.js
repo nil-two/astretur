@@ -1,13 +1,13 @@
 (function() {
-    var urlParams = {};
-    var url       = new URL(window.location.href);
-    var rawParams = url.search.replace(/^\?/, "").split(/&/);
-    for (var rawParam of rawParams) {
-        if (rawParam !== "" && rawParam.match(/=/)) {
-            var keyValue = rawParam.split(/=/);
+    var firstURLParams = {};
+    var firstURL       = new URL(window.location.href);
+    var rawParams      = firstURL.search.replace(/^\?/, "").split(/&/);
+    for (var i = 0; i < rawParams.length; i++) {
+        if (rawParams[i] !== "" && rawParams[i].match(/=/)) {
+            var keyValue = rawParams[i].split(/=/);
             var key   = keyValue[0];
             var value = keyValue[1];
-            urlParams[key] = decodeURI(value);
+            firstURLParams[key] = decodeURI(value);
         }
     }
 
@@ -331,8 +331,8 @@
     ];
 
     var allOptionsCacheByName = {};
-    for (var option of allOptions) {
-        allOptionsCacheByName[option.name] = option;
+    for (var i = 0; i < allOptions.length; i++) {
+        allOptionsCacheByName[allOptions[i].name] = allOptions[i];
     }
 
     var allCategories = [
@@ -415,8 +415,8 @@
 
     function nSelectedOptions(options) {
         var n = 0;
-        for (var option of options) {
-            if (isEmptyOption(option)) {
+        for (var i = 0; i < options.length; i++) {
+            if (isEmptyOption(options[i])) {
                 break;
             }
             n++;
@@ -441,15 +441,15 @@
         return false;
     }
 
-    function indexOfNewOption(currentOptions, newOption) {
-        if (nSelectedOptions(currentOptions) === 8) {
+    function indexOfNewOption(options, newOption) {
+        if (nSelectedOptions(options) === 8) {
             return -1;
         }
         for (var i = 0; i < 8; i++) {
-            if (isEmptyOption(currentOptions[i])) {
+            if (isEmptyOption(options[i])) {
                 return i;
             }
-            if (isConflictedOptions(currentOptions[i], newOption)) {
+            if (isConflictedOptions(options[i], newOption)) {
                 return i;
             }
         }
@@ -494,13 +494,13 @@
         insertOption(options, targetOption, dstI);
     }
 
-    var selectedOptionNamesFromURL = (urlParams["wpop"] || "").split(/,/);
+    var selectedOptionNamesFromURL = (firstURLParams["wpop"] || "").split(/,/);
     var defaultSelectedOptions = [];
     for (var i = 0; i < 8; i++) {
         defaultSelectedOptions.push(newEmptyOption());
     }
-    for (var name of selectedOptionNamesFromURL) {
-        var newOption = allOptionsCacheByName[name];
+    for (var i = 0; i < selectedOptionNamesFromURL.length; i++) {
+        var newOption = allOptionsCacheByName[selectedOptionNamesFromURL[i]];
         if (newOption) {
             addOption(defaultSelectedOptions, newOption);
         }
@@ -515,53 +515,51 @@
             categories:      allCategories,
             selectedOptions: defaultSelectedOptions,
 
-            sumOfEffect: function(key) {
+            sumOfEffects: function(key) {
                 var sum = 0;
                 var options = this.get("selectedOptions");
-                for (var option of options) {
-                    if (option.effects[key]) {
-                        sum += option.effects[key] || 0;
+                for (var i = 0; i < options.length; i++) {
+                    if (options[i].effects[key]) {
+                        sum += options[i].effects[key] || 0;
                     }
                 }
                 return sum === 0 ? "" : "+"+sum;
             },
 
-            extraEffects: function() {
+            extraEffects: function(options) {
                 var effects = [];
-                var options = this.get("selectedOptions");
-                for (var option of options) {
-                    if (option.effects.extra) {
-                        effects.push(option.effects.extra);
+                for (var i = 0; i < options.length; i++) {
+                    if (options[i].effects.extra) {
+                        effects.push(options[i].effects.extra);
                     }
                 }
                 return effects;
             },
         },
 
-        toggleCategory: function(categoryI) {
-            var path = "categories."+categoryI+".opened";
-            var opened = this.get(path);
-            this.set(path, !opened);
+        toggleCategory: function(category) {
+            category.opened = !category.opened;
+            this.update('categories');
         },
 
         addOption: function(newOption) {
             var options = this.get("selectedOptions");
             addOption(options, newOption);
-            this.update();
+            this.update('selectedOptions');
         },
 
         removeOption: function(removeI) {
             var options = this.get("selectedOptions");
             removeOption(options, removeI);
-            this.update();
+            this.update('selectedOptions');
         },
 
         queryOfCurrentOptions: function() {
             var options = this.get("selectedOptions");
             var selectedOptionNames = [];
-            for (var option of options) {
-                if (!isEmptyOption(option)) {
-                    selectedOptionNames.push(option.name);
+            for (var i = 0; i < options.length; i++) {
+                if (!isEmptyOption(options[i])) {
+                    selectedOptionNames.push(options[i].name);
                 }
             }
             return "?wpop="+selectedOptionNames.join(",");
