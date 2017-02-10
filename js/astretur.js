@@ -451,11 +451,35 @@
         }
     }
 
+    function insertOption(options, newOption, newIndex) {
+        var n = nSelectedOptions(options);
+        if (n >= 8) {
+            return;
+        }
+        if (newIndex < 0 || 7 < newIndex) {
+            return;
+        }
+        if (newIndex < n) {
+            for (var i = n; i > newIndex; i--) {
+                options[i] = options[i-1];
+            }
+            options[newIndex] = newOption;
+        } else {
+            options[n] = newOption;
+        }
+    }
+
     function removeOption(options, removeI) {
         for (var i = removeI; i < 7; i++) {
             options[i] = options[i+1];
         }
         options[options.length - 1] = newEmptyOption();
+    }
+
+    function moveOption(options, srcI, dstI) {
+        var targetOption = options[srcI];
+        removeOption(options, srcI);
+        insertOption(options, targetOption, dstI);
     }
 
     var selectedOptionNamesFromURL = (urlParams["wpop"] || "").split(/,/);
@@ -536,6 +560,44 @@
             currentURL.search = this.queryOfCurrentOptions();
             return currentURL.toString();
         },
+    });
+
+    var dragSrcPath;
+    var dragDstPath;
+    astretur.on("dragndrop", function(event) {
+        switch (event.type) {
+            case "dragstart":
+                event.original.dataTransfer.setData("text/plain", this.get(dragSrcPath).name);
+                dragSrcPath = event.resolve();
+                break;
+            case "dragover":
+                event.original.preventDefault();
+                dragDstPath = event.resolve();
+                this
+                break;
+            case "dragenter":
+                isOuter = false;
+                break;
+            case "dragleave":
+                isOuter = true;
+                break;
+            case "drop":
+                event.original.preventDefault();
+                var options = this.get("selectedOptions");
+                var srcI    = parseInt(dragSrcPath.replace(/^.*\./, ""));
+                var dstI    = parseInt(dragDstPath.replace(/^.*\./, ""));
+                moveOption(options, srcI, dstI);
+                this.update();
+                break;
+            case "dragend":
+                if (event.original.dataTransfer.dropEffect === 'none') {
+                    var options = this.get("selectedOptions");
+                    var srcI    = parseInt(dragSrcPath.replace(/^.*\./, ""));
+                    removeOption(options, srcI);
+                    this.update();
+                }
+                break;
+        }
     });
 
     var clipboard = new Clipboard(".clip-options-button", {
