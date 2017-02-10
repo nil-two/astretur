@@ -130,13 +130,12 @@ body {
   list-style: none;
 }
 .selected-option {
+  position: relative;
   height: 3.3rem;
   width: 16.0rem;
-  border: 1px solid rgba(0, 0, 0, 0.3);
-  border-top: 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.3);
   font-size: 1.4rem;
   line-height: 2.0rem;
-  text-align: center;
   cursor: pointer;
   -ms-user-select: none;
   -webkit-user-select: none;
@@ -144,8 +143,11 @@ body {
   -o-user-select: none;
   user-select: none;
 }
-.selected-option:first-child {
-  border-top: 1px solid rgba(0, 0, 0, 0.3);
+.selected-option-name {
+  position: absolute;
+  bottom: 3px;
+  width: 16.0rem;
+  text-align: center;
 }
 
 .result-pane {
