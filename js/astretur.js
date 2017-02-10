@@ -601,14 +601,6 @@
                 moveOption(options, srcI, dstI);
                 this.update();
                 break;
-            case "dragend":
-                if (event.original.dataTransfer.dropEffect === 'none') {
-                    var options = this.get("selectedOptions");
-                    var srcI    = parseInt(dragSrcPath.replace(/^.*\./, ""));
-                    removeOption(options, srcI);
-                    this.update();
-                }
-                break;
         }
     });
 
