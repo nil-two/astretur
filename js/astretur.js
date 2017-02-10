@@ -587,12 +587,6 @@
                 dragDstPath = event.resolve();
                 this
                 break;
-            case "dragenter":
-                isOuter = false;
-                break;
-            case "dragleave":
-                isOuter = true;
-                break;
             case "drop":
                 event.original.preventDefault();
                 var options = this.get("selectedOptions");
