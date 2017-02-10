@@ -424,6 +424,23 @@
         return n;
     }
 
+    function isConflictedOptions(optionA, optionB) {
+        if (isEmptyOption(optionA) || isEmptyOption(optionB)) {
+            return false;
+        }
+        if (optionA.group === optionB.group) {
+            if (optionA.group === 8) {
+                if (trimLevel(optionA.name) === trimLevel(optionB.name)) {
+                    return true;
+                }
+            }
+            if (optionA.name === optionB.name) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     function indexOfNewOption(currentOptions, newOption) {
         if (nSelectedOptions(currentOptions) === 8) {
             return -1;
@@ -432,13 +449,8 @@
             if (isEmptyOption(currentOptions[i])) {
                 return i;
             }
-            if (currentOptions[i].group === newOption.group) {
-                if (newOption.group !== 8) {
-                    return i;
-                }
-                if (trimLevel(currentOptions[i].name) === trimLevel(newOption.name)) {
-                    return i;
-                }
+            if (isConflictedOptions(currentOptions[i], newOption)) {
+                return i;
             }
         }
         return -1;
