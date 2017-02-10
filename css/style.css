@@ -147,9 +147,6 @@ body {
 .selected-option:first-child {
   border-top: 1px solid rgba(0, 0, 0, 0.3);
 }
-.selected-option:hover {
-  background: rgba(127, 207, 255, 0.15);
-}
 
 .result-pane {
   flex: 1;
