@@ -460,9 +460,6 @@
     }
 
     function indexOfNewOption(options, newOption) {
-        if (nSelectedOptions(options) === 8) {
-            return -1;
-        }
         for (var i = 0; i < 8; i++) {
             if (isEmptyOption(options[i])) {
                 return i;
