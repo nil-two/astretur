@@ -433,10 +433,15 @@
                 if (trimLevel(optionA.name) === trimLevel(optionB.name)) {
                     return true;
                 }
+                return false;
             }
-            if (optionA.name === optionB.name) {
-                return true;
+            if (optionA.group === 9) {
+                if (optionA.name.match(/^マーク/) && optionB.name.match(/^マーク/)) {
+                    return true;
+                }
+                return false;
             }
+            return true;
         }
         return false;
     }
