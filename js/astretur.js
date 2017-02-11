@@ -577,13 +577,12 @@
     astretur.on("dragndrop", function(event) {
         switch (event.type) {
             case "dragstart":
-                event.original.dataTransfer.setData("text/plain", this.get(dragSrcPath).name);
                 dragSrcPath = event.resolve();
+                event.original.dataTransfer.setData("text/plain", this.get(dragSrcPath).name);
                 break;
             case "dragover":
-                event.original.preventDefault();
                 dragDstPath = event.resolve();
-                this
+                event.original.preventDefault();
                 break;
             case "drop":
                 event.original.preventDefault();
