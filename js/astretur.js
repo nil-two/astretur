@@ -531,6 +531,8 @@
             categories:      allCategories,
             selectedOptions: defaultSelectedOptions,
 
+            dragOverI: -1,
+
             sumOfEffects: function(key) {
                 var sum = 0;
                 var options = this.get("selectedOptions");
@@ -555,19 +557,19 @@
 
         toggleCategory: function(category) {
             category.opened = !category.opened;
-            this.update('categories');
+            this.update("categories");
         },
 
         addOption: function(newOption) {
             var options = this.get("selectedOptions");
             addOption(options, newOption);
-            this.update('selectedOptions');
+            this.update("selectedOptions");
         },
 
         removeOption: function(removeI) {
             var options = this.get("selectedOptions");
             removeOption(options, removeI);
-            this.update('selectedOptions');
+            this.update("selectedOptions");
         },
 
         queryOfCurrentOptions: function() {
@@ -599,6 +601,8 @@
             case "dragover":
                 dragDstPath = event.resolve();
                 event.original.preventDefault();
+                var dstI = parseInt(dragDstPath.replace(/^.*\./, ""));
+                this.set("dragOverI", dstI);
                 break;
             case "drop":
                 event.original.preventDefault();
@@ -617,6 +621,9 @@
                 }
                 this.update("selectedOptions");
                 break;
+            case "dragend":
+                this.set("dragOverI", -1);
+                break;
         }
     });
     astretur.on("dragoption", function(event) {
@@ -624,6 +631,9 @@
             case "dragstart":
                 dragSrcPath = event.resolve();
                 event.original.dataTransfer.setData("text/plain", this.get(dragSrcPath).name);
+                break;
+            case "dragend":
+                this.set("dragOverI", -1);
                 break;
         }
     });
@@ -633,7 +643,7 @@
             return astretur.urlOfCurrentOptions();
         },
     });
-    clipboard.on('success', function() {
-        history.replaceState('', '', astretur.queryOfCurrentOptions());
+    clipboard.on("success", function() {
+        history.replaceState("", "", astretur.queryOfCurrentOptions());
     });
 })();

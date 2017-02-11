@@ -6,7 +6,7 @@ html {
 body {
   display: flex;
   height: 100%;
-  background: url('../asset/brickwall.png'); /* Background pattern from Subtle Patterns */
+  background: url("../asset/brickwall.png"); /* Background pattern from Subtle Patterns */
   flex-direction: column;
 }
 
@@ -77,6 +77,9 @@ body {
   overflow-x: auto;
   overflow-y: auto;
 }
+.drag-over {
+  background: rgba(127, 255, 127, 0.15);
+}
 
 .source-pane-body {
   overflow-y: scroll;
@@ -84,11 +87,11 @@ body {
 .source-category-list {
 }
 .source-category {
+  cursor: pointer;
 }
 .source-category-name {
   font-size: 1.6rem;
   line-height: 2.0rem;
-  cursor: pointer;
   background: rgba(0, 0, 0, 0.1);
   -ms-user-select: none;
   -webkit-user-select: none;
@@ -104,7 +107,7 @@ body {
 .source-option {
   padding: 1px 0;
   font-size: 1.6rem;
-  cursor: pointer;
+  cursor: move;
 }
 .source-option:hover {
   background: rgba(127, 207, 255, 0.15);
@@ -132,12 +135,12 @@ body {
   border-bottom: 1px solid rgba(0, 0, 0, 0.3);
   font-size: 1.4rem;
   line-height: 2.0rem;
-  cursor: pointer;
   -ms-user-select: none;
   -webkit-user-select: none;
   -moz-user-select: none;
   -o-user-select: none;
   user-select: none;
+  cursor: move;
 }
 .selected-option-name {
   position: absolute;
