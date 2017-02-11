@@ -451,7 +451,7 @@
     }
 
     function canAddWithoutOverwrite(options, newOption) {
-        for (var i = 0; i < 8; i++) {
+        for (var i = 0; i < options.length; i++) {
             if (isConflictedOptions(options[i], newOption)) {
                 return false;
             }
@@ -460,7 +460,7 @@
     }
 
     function indexOfNewOption(options, newOption) {
-        for (var i = 0; i < 8; i++) {
+        for (var i = 0; i < options.length; i++) {
             if (isEmptyOption(options[i])) {
                 return i;
             }
@@ -480,7 +480,7 @@
 
     function insertOption(options, newOption, requestI) {
         var n = nSelectedOptions(options);
-        if (n === 8) {
+        if (n === options.length) {
             return;
         }
         if (canAddWithoutOverwrite(options, newOption)) {
@@ -499,7 +499,7 @@
     }
 
     function removeOption(options, removeI) {
-        for (var i = removeI; i < 7; i++) {
+        for (var i = removeI; i < options.length-1; i++) {
             options[i] = options[i+1];
         }
         options[options.length - 1] = newEmptyOption();
