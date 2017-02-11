@@ -46,7 +46,7 @@
           <p class="selected-option-target">武器</p>
           <ul class="selected-option-list">
             {{#each selectedOptions:oi}}
-            <li class="selected-option" draggable="true" on-click="@this.removeOption(oi)" on-dnd="dragndrop">
+            <li class="selected-option {{oi === dragDstI ? 'drag-dst' : oi === dragSrcI ? 'drag-src' : ''}}" draggable="true" on-click="@this.removeOption(oi)" on-dnd="dragndrop">
               <p class="selected-option-name">{{name}}</p>
             </li>
             {{/each}}

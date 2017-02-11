@@ -77,6 +77,12 @@ body {
   overflow-x: auto;
   overflow-y: auto;
 }
+.drag-src {
+  background: rgba(255, 127, 127, 0.15);
+}
+.drag-dst {
+  background: rgba(127, 255, 127, 0.15);
+}
 
 .source-pane-body {
   overflow-y: scroll;

@@ -531,6 +531,9 @@
             categories:      allCategories,
             selectedOptions: defaultSelectedOptions,
 
+            dragSrcI: -1,
+            dragDstI: -1,
+
             sumOfEffects: function(key) {
                 var sum = 0;
                 var options = this.get("selectedOptions");
@@ -595,10 +598,14 @@
             case "dragstart":
                 dragSrcPath = event.resolve();
                 event.original.dataTransfer.setData("text/plain", this.get(dragSrcPath).name);
+                var srcI = parseInt(dragSrcPath.replace(/^.*\./, ""));
+                this.set('dragSrcI', srcI);
                 break;
             case "dragover":
                 dragDstPath = event.resolve();
                 event.original.preventDefault();
+                var dstI = parseInt(dragDstPath.replace(/^.*\./, ""));
+                this.set('dragDstI', dstI);
                 break;
             case "drop":
                 event.original.preventDefault();
@@ -617,6 +624,10 @@
                 }
                 this.update("selectedOptions");
                 break;
+            case "dragend":
+                this.set('dragSrcI', -1);
+                this.set('dragDstI', -1);
+                break;
         }
     });
     astretur.on("dragoption", function(event) {
@@ -624,6 +635,10 @@
             case "dragstart":
                 dragSrcPath = event.resolve();
                 event.original.dataTransfer.setData("text/plain", this.get(dragSrcPath).name);
+                break;
+            case "dragend":
+                this.set('dragSrcI', -1);
+                this.set('dragDstI', -1);
                 break;
         }
     });
