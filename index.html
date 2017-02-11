@@ -8,7 +8,7 @@
 </head>
 <body>
   <header class="header">
-    <h1 class="title">PSO2 特殊能力シュミレータ</h1>
+    <h1 class="title">PSO2 特殊能力シミュレータ</h1>
   </header>
   <main class="main">
     <div class="app" id="app"></div>
@@ -23,10 +23,10 @@
           <ul class="source-category-list">
             {{#each categories:ci}}
             <li class="source-category">
-              <p class="source-category-name" on-click="@this.toggleCategory(ci)">{{name}}</p>
+              <p class="source-category-name" on-click="@this.toggleCategory(.)">{{name}}</p>
               <ul class="source-option-list{{opened ? '' : '-closed'}}">
                 {{#each options}}
-                <li class="source-option" on-click="@this.addOption(this)">{{name}}</li>
+                <li class="source-option" on-click="@this.addOption(this)" draggable="true" on-dnd="dragoption">{{name}}</li>
                 {{/each}}
               </ul>
             </li>
@@ -46,7 +46,9 @@
           <p class="selected-option-target">武器</p>
           <ul class="selected-option-list">
             {{#each selectedOptions:oi}}
-            <li class="selected-option" on-click="@this.removeOption(oi)"><p>{{name}}</p></li>
+            <li class="selected-option" draggable="true" on-click="@this.removeOption(oi)" on-dnd="dragndrop">
+              <p class="selected-option-name">{{name}}</p>
+            </li>
             {{/each}}
           </ul>
         </div>
@@ -62,7 +64,7 @@
                 {{#each stats}}
                 <li class="stat">
                   <span class="stat-name">{{name}}</span>
-                  <span class="stat-value">{{sumOfEffect(key)}}</span>
+                  <span class="stat-value">{{sumOfEffects(key)}}</span>
                 </li>
                 {{/each}}
               </ul>
@@ -72,7 +74,7 @@
                 {{#each resists}}
                 <li class="stat">
                   <span class="stat-name">{{name}}</span>
-                  <span class="stat-value">{{sumOfEffect(key)}}</span>
+                  <span class="stat-value">{{sumOfEffects(key)}}</span>
                 </li>
                 {{/each}}
               </ul>
@@ -80,7 +82,7 @@
             <li class="stat-list-list-item">
               <ul class="extra-list">
                 <li class="extra-title">その他</li>
-                {{#each extraEffects()}}
+                {{#each extraEffects(selectedOptions)}}
                 <li class="extra">
                   <span class="extra-value">{{.}}</span>
                 </li>
@@ -94,6 +96,7 @@
   </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.16/clipboard.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/ractive/0.9.0-build-69/ractive.js"></script>
+  <script src="js/ractive-dnd-events.js"></script>
   <script src="js/astretur.js"></script>
 </body>
 </html>
