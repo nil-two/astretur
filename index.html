@@ -26,7 +26,7 @@
               <p class="source-category-name" on-click="@this.toggleCategory(.)">{{name}}</p>
               <ul class="source-option-list{{opened ? '' : '-closed'}}">
                 {{#each options}}
-                <li class="source-option" on-click="@this.addOption(this)" draggable="true" on-dnd="dragoption">{{name}}</li>
+                <li class="source-option" on-click="@this.addOption(this)" draggable="true" on-dnd="dragOptionFromSource">{{name}}</li>
                 {{/each}}
               </ul>
             </li>
@@ -46,7 +46,7 @@
           <p class="selected-option-target">武器</p>
           <ul class="selected-option-list">
             {{#each selectedOptions:oi}}
-            <li class="selected-option {{oi === dragOverI ? 'drag-over' : ''}}" draggable="true" on-click="@this.removeOption(oi)" on-dnd="dragndrop">
+            <li class="selected-option {{oi === dragOverI ? 'drag-over' : ''}}" draggable="true" on-click="@this.removeOption(oi)" on-dnd="dragOption">
               <p class="selected-option-name">{{name}}</p>
             </li>
             {{/each}}

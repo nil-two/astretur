@@ -593,7 +593,7 @@
 
     var dragSrcPath;
     var dragDstPath;
-    astretur.on("dragndrop", function(event) {
+    astretur.on("dragOption", function(event) {
         switch (event.type) {
             case "dragstart":
                 dragSrcPath = event.resolve();
@@ -627,7 +627,7 @@
                 break;
         }
     });
-    astretur.on("dragoption", function(event) {
+    astretur.on("dragOptionFromSource", function(event) {
         switch (event.type) {
             case "dragstart":
                 dragSrcPath = event.resolve();
