@@ -413,6 +413,10 @@
         return optionName.replace(/[ⅠⅡⅢⅣⅤ]$/, "");
     }
 
+    function extractIndex(path) {
+        return parseInt(path.replace(/^.*\./, ""));
+    }
+
     function nSelectedOptions(options) {
         var n = 0;
         for (var i = 0; i < options.length; i++) {
@@ -601,20 +605,20 @@
             case "dragover":
                 dragDstPath = event.resolve();
                 event.original.preventDefault();
-                var dstI = parseInt(dragDstPath.replace(/^.*\./, ""));
+                var dstI = extractIndex(dragDstPath);
                 this.set("dragOverI", dstI);
                 break;
             case "drop":
                 event.original.preventDefault();
                 if (dragSrcPath.match(/^selectedOptions/)) {
                     var options = this.get("selectedOptions");
-                    var srcI    = parseInt(dragSrcPath.replace(/^.*\./, ""));
-                    var dstI    = parseInt(dragDstPath.replace(/^.*\./, ""));
+                    var srcI    = extractIndex(dragSrcPath);
+                    var dstI    = extractIndex(dragDstPath);
                     moveOption(options, srcI, dstI);
                 } else {
                     var options = this.get("selectedOptions");
                     var src     = event.original.dataTransfer.getData("text/plain");
-                    var dstI    = parseInt(dragDstPath.replace(/^.*\./, ""));
+                    var dstI    = extractIndex(dragDstPath);
                     if (allOptionsCacheByName[src]) {
                         insertOption(options, allOptionsCacheByName[src], dstI);
                     }
