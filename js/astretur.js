@@ -531,8 +531,7 @@
             categories:      allCategories,
             selectedOptions: defaultSelectedOptions,
 
-            dragSrcI: -1,
-            dragDstI: -1,
+            dragOverI: -1,
 
             sumOfEffects: function(key) {
                 var sum = 0;
@@ -558,19 +557,19 @@
 
         toggleCategory: function(category) {
             category.opened = !category.opened;
-            this.update('categories');
+            this.update("categories");
         },
 
         addOption: function(newOption) {
             var options = this.get("selectedOptions");
             addOption(options, newOption);
-            this.update('selectedOptions');
+            this.update("selectedOptions");
         },
 
         removeOption: function(removeI) {
             var options = this.get("selectedOptions");
             removeOption(options, removeI);
-            this.update('selectedOptions');
+            this.update("selectedOptions");
         },
 
         queryOfCurrentOptions: function() {
@@ -598,14 +597,12 @@
             case "dragstart":
                 dragSrcPath = event.resolve();
                 event.original.dataTransfer.setData("text/plain", this.get(dragSrcPath).name);
-                var srcI = parseInt(dragSrcPath.replace(/^.*\./, ""));
-                this.set('dragSrcI', srcI);
                 break;
             case "dragover":
                 dragDstPath = event.resolve();
                 event.original.preventDefault();
                 var dstI = parseInt(dragDstPath.replace(/^.*\./, ""));
-                this.set('dragDstI', dstI);
+                this.set("dragOverI", dstI);
                 break;
             case "drop":
                 event.original.preventDefault();
@@ -625,8 +622,7 @@
                 this.update("selectedOptions");
                 break;
             case "dragend":
-                this.set('dragSrcI', -1);
-                this.set('dragDstI', -1);
+                this.set("dragOverI", -1);
                 break;
         }
     });
@@ -637,8 +633,7 @@
                 event.original.dataTransfer.setData("text/plain", this.get(dragSrcPath).name);
                 break;
             case "dragend":
-                this.set('dragSrcI', -1);
-                this.set('dragDstI', -1);
+                this.set("dragOverI", -1);
                 break;
         }
     });
@@ -648,7 +643,7 @@
             return astretur.urlOfCurrentOptions();
         },
     });
-    clipboard.on('success', function() {
-        history.replaceState('', '', astretur.queryOfCurrentOptions());
+    clipboard.on("success", function() {
+        history.replaceState("", "", astretur.queryOfCurrentOptions());
     });
 })();
