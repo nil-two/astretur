@@ -413,6 +413,10 @@
         return optionName.replace(/[ⅠⅡⅢⅣⅤ]$/, "");
     }
 
+    function extractIndex(path) {
+        return parseInt(path.replace(/^.*\./, ""));
+    }
+
     function nSelectedOptions(options) {
         var n = 0;
         for (var i = 0; i < options.length; i++) {
@@ -447,7 +451,7 @@
     }
 
     function canAddWithoutOverwrite(options, newOption) {
-        for (var i = 0; i < 8; i++) {
+        for (var i = 0; i < options.length; i++) {
             if (isConflictedOptions(options[i], newOption)) {
                 return false;
             }
@@ -456,10 +460,7 @@
     }
 
     function indexOfNewOption(options, newOption) {
-        if (nSelectedOptions(options) === 8) {
-            return -1;
-        }
-        for (var i = 0; i < 8; i++) {
+        for (var i = 0; i < options.length; i++) {
             if (isEmptyOption(options[i])) {
                 return i;
             }
@@ -479,7 +480,7 @@
 
     function insertOption(options, newOption, requestI) {
         var n = nSelectedOptions(options);
-        if (n === 8) {
+        if (n === options.length) {
             return;
         }
         if (canAddWithoutOverwrite(options, newOption)) {
@@ -498,7 +499,7 @@
     }
 
     function removeOption(options, removeI) {
-        for (var i = removeI; i < 7; i++) {
+        for (var i = removeI; i < options.length-1; i++) {
             options[i] = options[i+1];
         }
         options[options.length - 1] = newEmptyOption();
@@ -592,29 +593,31 @@
 
     var dragSrcPath;
     var dragDstPath;
-    astretur.on("dragndrop", function(event) {
+    astretur.on("dragOption", function(event) {
         switch (event.type) {
             case "dragstart":
                 dragSrcPath = event.resolve();
-                event.original.dataTransfer.setData("text/plain", this.get(dragSrcPath).name);
+                if (!isEmptyOption(this.get(dragSrcPath))) {
+                    event.original.dataTransfer.setData("text/plain", this.get(dragSrcPath).name);
+                }
                 break;
             case "dragover":
                 dragDstPath = event.resolve();
                 event.original.preventDefault();
-                var dstI = parseInt(dragDstPath.replace(/^.*\./, ""));
+                var dstI = extractIndex(dragDstPath);
                 this.set("dragOverI", dstI);
                 break;
             case "drop":
                 event.original.preventDefault();
                 if (dragSrcPath.match(/^selectedOptions/)) {
                     var options = this.get("selectedOptions");
-                    var srcI    = parseInt(dragSrcPath.replace(/^.*\./, ""));
-                    var dstI    = parseInt(dragDstPath.replace(/^.*\./, ""));
+                    var srcI    = extractIndex(dragSrcPath);
+                    var dstI    = extractIndex(dragDstPath);
                     moveOption(options, srcI, dstI);
                 } else {
                     var options = this.get("selectedOptions");
                     var src     = event.original.dataTransfer.getData("text/plain");
-                    var dstI    = parseInt(dragDstPath.replace(/^.*\./, ""));
+                    var dstI    = extractIndex(dragDstPath);
                     if (allOptionsCacheByName[src]) {
                         insertOption(options, allOptionsCacheByName[src], dstI);
                     }
@@ -626,7 +629,7 @@
                 break;
         }
     });
-    astretur.on("dragoption", function(event) {
+    astretur.on("dragOptionFromSource", function(event) {
         switch (event.type) {
             case "dragstart":
                 dragSrcPath = event.resolve();
