@@ -597,7 +597,9 @@
         switch (event.type) {
             case "dragstart":
                 dragSrcPath = event.resolve();
-                event.original.dataTransfer.setData("text/plain", this.get(dragSrcPath).name);
+                if (!isEmptyOption(this.get(dragSrcPath))) {
+                    event.original.dataTransfer.setData("text/plain", this.get(dragSrcPath).name);
+                }
                 break;
             case "dragover":
                 dragDstPath = event.resolve();
