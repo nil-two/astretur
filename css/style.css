@@ -107,7 +107,7 @@ body {
 .source-option {
   padding: 1px 0;
   font-size: 1.6rem;
-  cursor: move;
+  cursor: default;
 }
 .source-option:hover {
   background: rgba(127, 207, 255, 0.15);
@@ -140,7 +140,7 @@ body {
   -moz-user-select: none;
   -o-user-select: none;
   user-select: none;
-  cursor: move;
+  cursor: default;
 }
 .selected-option-name {
   position: absolute;
