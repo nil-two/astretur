@@ -25,9 +25,9 @@
           <ul class="source-category-list">
             {{#each categories:ci}}
             <li class="source-category">
-              <p class="source-category-name" on-click="@this.toggleCategory(.)">{{name}}</p>
+              <p class="source-category-name" on-click="@this.toggleCategory(this)">{{name}}</p>
               <ul class="source-option-list{{opened ? '' : '-closed'}}">
-                {{#each options}}
+                {{#each options:oi}}
                 <li class="source-option" on-click="@this.addOption(this)" draggable="true" on-dnd="dragOptionFromSource">{{name}}</li>
                 {{/each}}
               </ul>
@@ -45,14 +45,16 @@
           <span class="clip-options-button">URL</span>
         </div>
         <div class="pane-body selection-pane-body">
-          <p class="selected-option-target">武器</p>
+          {{#equipment}}
+          <p class="selected-option-target">{{name}}</p>
           <ul class="selected-option-list">
-            {{#each selectedOptions:oi}}
+            {{#each options:oi}}
             <li class="selected-option {{oi === dragOverI ? 'drag-over' : ''}}" draggable="true" on-click="@this.removeOption(oi)" on-dnd="dragOption">
               <p class="selected-option-name">{{name}}</p>
             </li>
             {{/each}}
           </ul>
+          {{/each}}
         </div>
       </div>
       <div class="pane result-pane">
@@ -66,7 +68,7 @@
                 {{#each stats}}
                 <li class="stat">
                   <span class="stat-name">{{name}}</span>
-                  <span class="stat-value">{{sumOfEffects(key)}}</span>
+                  <span class="stat-value">{{effectOn(key)}}</span>
                 </li>
                 {{/each}}
               </ul>
@@ -76,7 +78,7 @@
                 {{#each resists}}
                 <li class="stat">
                   <span class="stat-name">{{name}}</span>
-                  <span class="stat-value">{{sumOfEffects(key)}}</span>
+                  <span class="stat-value">{{effectOn(key)}}</span>
                 </li>
                 {{/each}}
               </ul>

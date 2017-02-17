@@ -1,17 +1,7 @@
 (function() {
-    var firstURLParams = {};
-    var firstURL       = new URL(window.location.href);
-    var rawParams      = firstURL.search.replace(/^\?/, "").split(/&/);
-    for (var i = 0; i < rawParams.length; i++) {
-        if (rawParams[i] !== "" && rawParams[i].match(/=/)) {
-            var keyValue = rawParams[i].split(/=/);
-            var key   = keyValue[0];
-            var value = keyValue[1];
-            firstURLParams[key] = decodeURI(value);
-        }
-    }
+    var N_OPTIONS = 8;
 
-    var allStats = [
+    var ALL_STATS = [
         {key: "hp",   name: "HP"},
         {key: "pp",   name: "PP"},
         {key: "sAtk", name: "打撃力"},
@@ -23,7 +13,7 @@
         {key: "tDef", name: "法撃防御"},
     ];
 
-    var allResists = [
+    var ALL_RESISTS = [
         {key: "sRes", name: "打撃耐性"},
         {key: "rRes", name: "射撃耐性"},
         {key: "tRes", name: "法撃耐性"},
@@ -35,7 +25,7 @@
         {key: "dRes", name: "闇耐性"},
     ];
 
-    var allOptions = [
+    var ALL_OPTIONS = [
         {group: 1, name: "グンネ・ソール",         effects: {hp: 45, sAtk: 15}},
         {group: 1, name: "ジグモル・ソール",       effects: {pp: 4, sAtk: 15}},
         {group: 1, name: "ヴォル・ソール",         effects: {hp: 20, sAtk: 30}},
@@ -330,30 +320,29 @@
         {group: 105, name: "アルティメットバスター", effects: {extra: "世壊種に与えるダメージが10%上昇"}},
     ];
 
-    var allOptionsCacheByName = {};
-    for (var i = 0; i < allOptions.length; i++) {
-        allOptionsCacheByName[allOptions[i].name] = allOptions[i];
-    }
+    var ALL_OPTIONS_CACHE_BY_NAME = {};
+    (function() {
+            for (var i = 0; i < ALL_OPTIONS.length; i++) {
+                ALL_OPTIONS_CACHE_BY_NAME[ALL_OPTIONS[i].name] = ALL_OPTIONS[i];
+            }
+    })();
 
-    var allCategories = [
+    var ALL_CATEGORIES = [
         {
             name: "ソール系",
-            opened: false,
-            options: allOptions.filter(function(option) {
+            options: ALL_OPTIONS.filter(function(option) {
                 return option.group === 1;
             }),
         },
         {
             name: "ステータス上昇系",
-            opened: false,
-            options: allOptions.filter(function(option) {
+            options: ALL_OPTIONS.filter(function(option) {
                 return option.group === 8 && nKeys(option.effects) === 1;
             }),
         },
         {
             name: "ステータス上昇系(複合)",
-            opened: false,
-            options: allOptions.filter(function(option) {
+            options: ALL_OPTIONS.filter(function(option) {
                 return (option.group === 2)
                     || (option.group === 4)
                     || (option.group === 5)
@@ -366,22 +355,19 @@
         },
         {
             name: "レジスト系",
-            opened: false,
-            options: allOptions.filter(function(option) {
+            options: ALL_OPTIONS.filter(function(option) {
                 return option.group === 10;
             }),
         },
         {
             name: "状態異常付与系",
-            opened: false,
-            options: allOptions.filter(function(option) {
+            options: ALL_OPTIONS.filter(function(option) {
                 return option.group === 11;
             }),
         },
         {
             name: "特殊能力系",
-            opened: false,
-            options: allOptions.filter(function(option) {
+            options: ALL_OPTIONS.filter(function(option) {
                 return (option.group === 12)
                     || (option.group === 13)
                     || (option.group >= 100)
@@ -390,198 +376,290 @@
         },
         {
             name: "追加アイテム系",
-            opened: false,
-            options: allOptions.filter(function(option) {
+            options: ALL_OPTIONS.filter(function(option) {
                 return option.group === 3;
             }),
         },
     ];
 
-    function nKeys(hash) {
-        return Object.keys(hash).length;
-    }
-
-    function newEmptyOption() {
-        return {group: -1, name: "", effects: {}};
-    }
-
-    function isEmptyOption(option) {
-        return option.group === -1;
+    function nKeys(map) {
+        return Object.keys(map).length;
     }
 
     function trimLevel(optionName) {
         return optionName.replace(/[ⅠⅡⅢⅣⅤ]$/, "");
     }
 
-    function extractIndex(path) {
-        return parseInt(path.replace(/^.*\./, ""));
+    function extractIndex(pathName) {
+        return parseInt(pathName.replace(/^.*\./, ""));
     }
 
-    function nSelectedOptions(options) {
-        var n = 0;
-        for (var i = 0; i < options.length; i++) {
-            if (isEmptyOption(options[i])) {
-                break;
+    function parseURLParams(url) {
+        var params    = {};
+        var rawParams = url.search.replace(/^\?/, "").split(/&/);
+        for (var i = 0; i < rawParams.length; i++) {
+            if (rawParams[i] !== "" && rawParams[i].match(/=/)) {
+                var keyValue = rawParams[i].split(/=/);
+                var key   = keyValue[0];
+                var value = keyValue[1];
+                params[key] = decodeURI(value);
             }
-            n++;
         }
-        return n;
+        return params;
     }
 
-    function isConflictedOptions(optionA, optionB) {
-        if (isEmptyOption(optionA) || isEmptyOption(optionB)) {
-            return false;
-        }
-        if (optionA.group === optionB.group) {
-            if (optionA.group === 8 || optionA.group === 10) {
-                if (trimLevel(optionA.name) === trimLevel(optionB.name)) {
-                    return true;
-                }
-                return false;
-            }
-            if (optionA.group === 9) {
-                if (optionA.name.match(/^マーク/) && optionB.name.match(/^マーク/)) {
-                    return true;
-                }
-                return false;
-            }
-            return true;
-        }
-        return false;
+    function URLParams(url) {
+        this.params = parseURLParams(url);
     }
+    URLParams.prototype = {
+        get: function(key) {
+            return this.params[key];
+        },
 
-    function canAddWithoutOverwrite(options, newOption) {
-        for (var i = 0; i < options.length; i++) {
-            if (isConflictedOptions(options[i], newOption)) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    function indexOfNewOption(options, newOption) {
-        for (var i = 0; i < options.length; i++) {
-            if (isEmptyOption(options[i])) {
-                return i;
-            }
-            if (isConflictedOptions(options[i], newOption)) {
-                return i;
-            }
-        }
-        return -1;
+        getOrElse: function(key, defaultValue) {
+            return this.params[key] || defaultValue;
+        },
     };
 
-    function addOption(options, newOption) {
-        var i = indexOfNewOption(options, newOption);
-        if (i !== -1) {
-            options[i] = newOption;
-        }
-    }
-
-    function insertOption(options, newOption, requestI) {
-        var n = nSelectedOptions(options);
-        if (n === options.length) {
-            return;
-        }
-        if (canAddWithoutOverwrite(options, newOption)) {
-            if (requestI < n) {
-                for (var i = n; i > requestI; i--) {
-                    options[i] = options[i-1];
-                }
-                options[requestI] = newOption;
-            } else {
-                options[n] = newOption;
-            }
+    function Option(optionName) {
+        var original = ALL_OPTIONS_CACHE_BY_NAME[optionName];
+        if (original) {
+            this.group   = original.group;
+            this.name    = original.name;
+            this.effects = original.effects;
         } else {
-            var insertI = indexOfNewOption(options, newOption);
-            options[insertI] = newOption;
+            this.group   = -1;
+            this.name    = "";
+            this.effects = {};
         }
     }
+    Option.prototype = {
+        isEmpty: function() {
+            return this.group === -1;
+        },
 
-    function removeOption(options, removeI) {
-        for (var i = removeI; i < options.length-1; i++) {
-            options[i] = options[i+1];
+        conflicts: function(anotherOption) {
+            var a = this;
+            var b = anotherOption;
+            if (a.isEmpty() || b.isEmpty()) {
+                return false;
+            }
+            if (a.group === b.group) {
+                if (a.group === 8 || a.group === 10) {
+                    if (trimLevel(a.name) === trimLevel(b.name)) {
+                        return true;
+                    }
+                    return false;
+                }
+                if (a.group === 9) {
+                    if (a.name.match(/^マーク/) && b.name.match(/^マーク/)) {
+                        return true;
+                    }
+                    return false;
+                }
+                return true;
+            }
+            return false;
         }
-        options[options.length - 1] = newEmptyOption();
-    }
+    };
 
-    function moveOption(options, srcI, dstI) {
-        var targetOption = options[srcI];
-        removeOption(options, srcI);
-        insertOption(options, targetOption, dstI);
+    function Category(categoryName, options) {
+        this.name    = categoryName;
+        this.options = options;
+        this.opened  = false;
     }
+    Category.prototype = {
+        toggleOpeningAndClosing: function() {
+            this.opened = !this.opened;
+        }
+    };
 
-    var selectedOptionNamesFromURL = (firstURLParams["wpop"] || "").split(/,/);
-    var defaultSelectedOptions = [];
-    for (var i = 0; i < 8; i++) {
-        defaultSelectedOptions.push(newEmptyOption());
-    }
-    for (var i = 0; i < selectedOptionNamesFromURL.length; i++) {
-        var newOption = allOptionsCacheByName[selectedOptionNamesFromURL[i]];
-        if (newOption) {
-            addOption(defaultSelectedOptions, newOption);
+    function Equipment(equipmentName) {
+        this.name    = name;
+        this.options = [];
+        for (var i = 0; i < N_OPTIONS; i++) {
+            this.options[i] = new Option();
         }
     }
+    Equipment.prototype = {
+        nSelectedOptions: function() {
+            var n = 0;
+            for (var i = 0; i < N_OPTIONS; i++) {
+                if (this.options[i].isEmpty()) {
+                    break;
+                }
+                n++;
+            }
+            return n;
+        },
 
-    var astretur = new Ractive({
+        canAddOptionWithoutOverwrite: function(newOption) {
+            for (var i = 0; i < N_OPTIONS; i++) {
+                if (this.options[i].conflicts(newOption)) {
+                    return false;
+                }
+            }
+            return true;
+        },
+
+        indexOfNewOption: function(newOption) {
+            for (var i = 0; i < N_OPTIONS; i++) {
+                if (this.options[i].isEmpty()) {
+                    return i;
+                }
+                if (this.options[i].conflicts(newOption)) {
+                    return i;
+                }
+            }
+            return -1;
+        },
+
+        addOption: function(newOption) {
+            var i = this.indexOfNewOption(newOption);
+            if (i !== -1) {
+                this.options[i] = newOption;
+            }
+        },
+
+        addOptionByName: function(newOptionName) {
+            var newOption = new Option(newOptionName)
+            if (!newOption.isEmpty()) {
+                this.addOption(newOption);
+            }
+        },
+
+        insertOption: function(newOption, requestI) {
+            var n = this.nSelectedOptions();
+            if (n === N_OPTIONS) {
+                return 0;
+            }
+            if (this.canAddOptionWithoutOverwrite(newOption)) {
+                if (requestI < n) {
+                    for (var i = n; i > requestI; i--) {
+                        this.options[i] = this.options[i-1];
+                    }
+                    this.options[requestI] = newOption;
+                } else {
+                    this.options[n] = newOption;
+                }
+            } else {
+                var insertI = this.indexOfNewOption(newOption);
+                this.options[insertI] = newOption;
+            }
+        },
+
+        insertOptionByName: function(newOptionName, requestI) {
+            var newOption = new Option(newOptionName);
+            if (!newOption.isEmpty()) {
+                this.insertOption(newOption, requestI);
+            }
+        },
+
+        removeOption: function(removeI) {
+            for (var i = removeI; i < N_OPTIONS-1; i++) {
+                this.options[i] = this.options[i+1];
+            }
+            this.options[N_OPTIONS - 1] = new Option();
+        },
+
+        moveOption: function(srcI, dstI) {
+            var src = this.options[srcI];
+            this.removeOption(srcI);
+            this.insertOption(src, dstI);
+        },
+
+        effectOn: function(key) {
+            var effect = 0;
+            for (var i = 0; i < this.options.length; i++) {
+                if (this.options[i].effects[key]) {
+                    effect += this.options[i].effects[key] || 0;
+                }
+            }
+            return effect;
+        },
+
+        listExtraEffects: function() {
+            var effects = [];
+            for (var i = 0; i < this.options.length; i++) {
+                if (this.options[i].effects.extra) {
+                    effects.push(this.options[i].effects.extra);
+                }
+            }
+            return effects;
+        },
+    };
+
+    var firstEquipment = new Equipment("武器");
+    (function() {
+            var firstURL         = new URL(window.location.href);
+            var firstURLParams   = new URLParams(firstURL);
+            var firstOptionNames = firstURLParams.getOrElse("wpop", "").split(/,/);
+            for (var i = 0; i < firstOptionNames.length; i++) {
+                firstEquipment.addOptionByName(firstOptionNames[i]);
+            }
+    })();
+
+    var firstCategories = [];
+    (function() {
+            for (var ci = 0; ci < ALL_CATEGORIES.length; ci++) {
+                var name    = ALL_CATEGORIES[ci].name;
+                var options = [];
+                for (var oi = 0; oi < ALL_CATEGORIES[ci].options.length; oi++) {
+                    options[oi] = new Option(ALL_CATEGORIES[ci].options[oi].name);
+                }
+                firstCategories[ci] = new Category(name, options);
+            }
+    })();
+
+    var app = new Ractive({
         el: "app",
         template: "#template",
         data: {
-            stats:           allStats,
-            resists:         allResists,
-            categories:      allCategories,
-            selectedOptions: defaultSelectedOptions,
+            stats:      ALL_STATS,
+            resists:    ALL_RESISTS,
+            categories: firstCategories,
+            equipment:  firstEquipment,
 
             dragOverI: -1,
 
-            sumOfEffects: function(key) {
-                var sum = 0;
-                var options = this.get("selectedOptions");
-                for (var i = 0; i < options.length; i++) {
-                    if (options[i].effects[key]) {
-                        sum += options[i].effects[key] || 0;
-                    }
-                }
-                return sum === 0 ? "" : "+"+sum;
+            effectOn: function(key) {
+                var equipment = this.get("equipment");
+                var effect    = equipment.effectOn(key);
+                return effect === 0 ? '' : '+'+effect;
             },
 
-            extraEffects: function(options) {
-                var effects = [];
-                for (var i = 0; i < options.length; i++) {
-                    if (options[i].effects.extra) {
-                        effects.push(options[i].effects.extra);
-                    }
-                }
-                return effects;
+            extraEffects: function() {
+                var equipment = this.get("equipment");
+                return equipment.listExtraEffects();
             },
         },
 
         toggleCategory: function(category) {
-            category.opened = !category.opened;
+            category.toggleOpeningAndClosing();
             this.update("categories");
         },
 
         addOption: function(newOption) {
-            var options = this.get("selectedOptions");
-            addOption(options, newOption);
-            this.update("selectedOptions");
+            var equipment = this.get("equipment");
+            equipment.addOption(newOption);
+            this.update("equipment");
         },
 
         removeOption: function(removeI) {
-            var options = this.get("selectedOptions");
-            removeOption(options, removeI);
-            this.update("selectedOptions");
+            var equipment = this.get("equipment");
+            equipment.removeOption(removeI);
+            this.update("equipment");
         },
 
         queryOfCurrentOptions: function() {
-            var options = this.get("selectedOptions");
-            var selectedOptionNames = [];
-            for (var i = 0; i < options.length; i++) {
-                if (!isEmptyOption(options[i])) {
-                    selectedOptionNames.push(options[i].name);
+            var equipment   = this.get("equipment");
+            var optionNames = [];
+            for (var i = 0; i < equipment.options.length; i++) {
+                if (!equipment.options[i].isEmpty()) {
+                    optionNames.push(equipment.options[i].name);
                 }
             }
-            return "?wpop="+selectedOptionNames.join(",");
+            return "?wpop="+optionNames.join(",");
         },
 
         urlOfCurrentOptions: function() {
@@ -593,12 +671,13 @@
 
     var dragSrcPath;
     var dragDstPath;
-    astretur.on("dragOption", function(event) {
+    app.on("dragOption", function(event) {
         switch (event.type) {
             case "dragstart":
                 dragSrcPath = event.resolve();
-                if (!isEmptyOption(this.get(dragSrcPath))) {
-                    event.original.dataTransfer.setData("text/plain", this.get(dragSrcPath).name);
+                var option = this.get(dragSrcPath);
+                if (!option.isEmpty()) {
+                    event.original.dataTransfer.setData("text/plain", option.name);
                 }
                 break;
             case "dragover":
@@ -609,27 +688,25 @@
                 break;
             case "drop":
                 event.original.preventDefault();
-                if (dragSrcPath.match(/^selectedOptions/)) {
-                    var options = this.get("selectedOptions");
-                    var srcI    = extractIndex(dragSrcPath);
-                    var dstI    = extractIndex(dragDstPath);
-                    moveOption(options, srcI, dstI);
+                if (dragSrcPath.match(/^equipment/)) {
+                    var equipment = this.get("equipment");
+                    var srcI      = extractIndex(dragSrcPath);
+                    var dstI      = extractIndex(dragDstPath);
+                    equipment.moveOption(srcI, dstI);
                 } else {
-                    var options = this.get("selectedOptions");
-                    var src     = event.original.dataTransfer.getData("text/plain");
-                    var dstI    = extractIndex(dragDstPath);
-                    if (allOptionsCacheByName[src]) {
-                        insertOption(options, allOptionsCacheByName[src], dstI);
-                    }
+                    var equipment = this.get("equipment");
+                    var srcName   = event.original.dataTransfer.getData("text/plain");
+                    var dstI      = extractIndex(dragDstPath);
+                    equipment.insertOptionByName(srcName, dstI);
                 }
-                this.update("selectedOptions");
+                this.update("equipment");
                 break;
             case "dragend":
                 this.set("dragOverI", -1);
                 break;
         }
     });
-    astretur.on("dragOptionFromSource", function(event) {
+    app.on("dragOptionFromSource", function(event) {
         switch (event.type) {
             case "dragstart":
                 dragSrcPath = event.resolve();
@@ -643,10 +720,10 @@
 
     var clipboard = new Clipboard(".clip-options-button", {
         text: function() {
-            return astretur.urlOfCurrentOptions();
+            return app.urlOfCurrentOptions();
         },
     });
     clipboard.on("success", function() {
-        history.replaceState("", "", astretur.queryOfCurrentOptions());
+        history.replaceState("", "", app.queryOfCurrentOptions());
     });
 })();
