@@ -4,39 +4,45 @@ html {
   font-family: sans-serif;
 }
 body {
+}
+
+.drag-over {
+  background: rgba(127, 255, 127, 0.15);
+}
+
+.root-body {
   display: flex;
   height: 100%;
   background: url("../asset/brickwall.png"); /* Background pattern from Subtle Patterns */
   flex-direction: column;
 }
-
-.header {
+.root-header {
   height: 3.0rem;
   background: rgba(0, 0, 0, 0.2);
   border-bottom: 1px solid rgba(0, 0, 0, 0.3);
 }
-.title {
+.root-title {
   display: block;
   margin: 0.5rem;
   font-size: 2.0rem;
   text-align: center;
 }
-
-.main {
+.root-main {
   display: flex;
   flex-direction: column;
   flex: 1;
 }
+
 .app {
   display: flex;
   flex-direction: row;
   flex: 1;
 }
-.app-left-side {
+.app-side {
   width: 20.0rem;
   border-right: 1px solid rgba(0, 0, 0, 0.3);
 }
-.app-right-side {
+.app-main {
   display: flex;
   flex-direction: column;
   flex: 1;
@@ -54,31 +60,12 @@ body {
 .pane-title {
 }
 .pane-body {
-  background: rgba(0, 0, 0, 0.10);
-}
-.clip-options-button {
-  color: #005090;
-  font-weight: bold;
-  text-decoration: underline;
-  -ms-user-select: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -o-user-select: none;
-  user-select: none;
-  cursor: pointer;
-}
-.clip-options-button:active {
-  padding-left: 1px;
-}
-.pane-body {
   position: absolute;
   width: 100%;
   height: calc(100% - 2.0rem - 1px);
+  background: rgba(0, 0, 0, 0.10);
   overflow-x: auto;
   overflow-y: auto;
-}
-.drag-over {
-  background: rgba(127, 255, 127, 0.15);
 }
 
 .source-pane-body {
@@ -107,7 +94,7 @@ body {
 .source-option {
   padding: 1px 0;
   font-size: 1.6rem;
-  cursor: move;
+  cursor: default;
 }
 .source-option:hover {
   background: rgba(127, 207, 255, 0.15);
@@ -116,6 +103,20 @@ body {
 .selection-pane {
   height: 361px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+}
+.clip-options-button {
+  color: #005090;
+  font-weight: bold;
+  text-decoration: underline;
+  -ms-user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+  cursor: pointer;
+}
+.clip-options-button:active {
+  padding-left: 1px;
 }
 .selected-option-target {
   margin: 8px 0 0 21px;
@@ -140,7 +141,7 @@ body {
   -moz-user-select: none;
   -o-user-select: none;
   user-select: none;
-  cursor: move;
+  cursor: default;
 }
 .selected-option-name {
   position: absolute;

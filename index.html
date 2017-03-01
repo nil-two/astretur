@@ -8,15 +8,15 @@
   <link rel="stylesheet" href="css/html5reset-1.6.1.css">
   <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
-  <header class="header">
-    <h1 class="title">PSO2 特殊能力シミュレータ</h1>
+<body class="root-body">
+  <header class="root-header">
+    <h1 class="root-title">PSO2 特殊能力シミュレータ</h1>
   </header>
-  <main class="main">
+  <main class="root-main">
     <div class="app" id="app"></div>
   </main>
   <script id="template" type="text/ractive">
-    <div class="app-left-side">
+    <div class="app-side">
       <div class="pane source-pane">
         <div class="pane-header">
           <span class="pane-title">特殊能力一覧</span>
@@ -25,9 +25,9 @@
           <ul class="source-category-list">
             {{#each categories:ci}}
             <li class="source-category">
-              <p class="source-category-name" on-click="@this.toggleCategory(.)">{{name}}</p>
+              <p class="source-category-name" on-click="@this.toggleCategory(this)">{{name}}</p>
               <ul class="source-option-list{{opened ? '' : '-closed'}}">
-                {{#each options}}
+                {{#each options:oi}}
                 <li class="source-option" on-click="@this.addOption(this)" draggable="true" on-dnd="dragOptionFromSource">{{name}}</li>
                 {{/each}}
               </ul>
@@ -37,7 +37,7 @@
         </div>
       </div>
     </div>
-    <div class="app-right-side">
+    <div class="app-main">
       <div class="pane selection-pane">
         <div class="pane-header">
           <span class="pane-title">選択した特殊能力</span>
@@ -45,14 +45,16 @@
           <span class="clip-options-button">URL</span>
         </div>
         <div class="pane-body selection-pane-body">
-          <p class="selected-option-target">武器</p>
+          {{#equipment}}
+          <p class="selected-option-target">{{name}}</p>
           <ul class="selected-option-list">
-            {{#each selectedOptions:oi}}
+            {{#each options:oi}}
             <li class="selected-option {{oi === dragOverI ? 'drag-over' : ''}}" draggable="true" on-click="@this.removeOption(oi)" on-dnd="dragOption">
               <p class="selected-option-name">{{name}}</p>
             </li>
             {{/each}}
           </ul>
+          {{/equipment}}
         </div>
       </div>
       <div class="pane result-pane">
@@ -66,7 +68,7 @@
                 {{#each stats}}
                 <li class="stat">
                   <span class="stat-name">{{name}}</span>
-                  <span class="stat-value">{{sumOfEffects(key)}}</span>
+                  <span class="stat-value">{{effectOn(key)}}</span>
                 </li>
                 {{/each}}
               </ul>
@@ -76,7 +78,7 @@
                 {{#each resists}}
                 <li class="stat">
                   <span class="stat-name">{{name}}</span>
-                  <span class="stat-value">{{sumOfEffects(key)}}</span>
+                  <span class="stat-value">{{effectOn(key)}}</span>
                 </li>
                 {{/each}}
               </ul>
