@@ -263,8 +263,6 @@
         {group: 10, name: "オールレジストⅠ",   effects: {sRes: 1, rRes: 1, tRes: 1, fRes: 1, iRes: 1, eRes: 1, wRes: 1, lRes: 1, dRes: 1}},
         {group: 10, name: "オールレジストⅡ",   effects: {sRes: 2, rRes: 2, tRes: 2, fRes: 2, iRes: 2, eRes: 2, wRes: 2, lRes: 2, dRes: 2}},
         {group: 10, name: "オールレジストⅢ",   effects: {sRes: 3, rRes: 3, tRes: 3, fRes: 3, iRes: 3, eRes: 3, wRes: 3, lRes: 3, dRes: 3}},
-        {group: 10, name: "オールレジストⅣ",   effects: {sRes: 4, rRes: 4, tRes: 4, fRes: 4, iRes: 4, eRes: 4, wRes: 4, lRes: 4, dRes: 4}},
-        {group: 10, name: "オールレジストⅤ",   effects: {sRes: 5, rRes: 5, tRes: 5, fRes: 5, iRes: 5, eRes: 5, wRes: 5, lRes: 5, dRes: 5}},
 
         {group: 11, name: "バーンⅠ",     effects: {extra: "バーンLv.1を付与する"}},
         {group: 11, name: "バーンⅡ",     effects: {extra: "バーンLv.2を付与する"}},
