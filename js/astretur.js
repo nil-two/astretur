@@ -211,9 +211,9 @@
         {group: 9, name: "マーク・カレジナ",     effects: {pp: 5, sAtk: 40, rAtk: 40, tAtk: 40}},
         {group: 9, name: "マーク・アンガル",     effects: {sAtk: 50, rAtk: 50, tAtk: 50, dex: 40}},
         {group: 9, name: "マーク・グリフ",       effects: {hp: 80, sDef: 50, rDef: 50, tDef: 50}},
-        {group: 9, name: "ソールレセプター",     effects: {sAtk: 10, rAtk: 10, tAtk: 10, dex: 10, sDef: 10, rDef: 10, tDef: 10, extra: "ソール系の合成成功率が大幅にアップする"}},
+        {group: 9, name: "ソールレセプター",     effects: {sAtk: 10, rAtk: 10, tAtk: 10, dex: 10, sDef: 10, rDef: 10, tDef: 10, extra: "ソール系特殊能力の合成成功率を大幅に上昇"}},
         {group: 9, name: "ギフトレセプター",     effects: {sAtk: 10, rAtk: 10, tAtk: 10, dex: 10, sDef: 10, rDef: 10, tDef: 10, extra: "ギフト系特殊能力が引き継ぎ可能になる"}},
-        {group: 9, name: "エクストレセプター",   effects: {sAtk: 10, rAtk: 10, tAtk: 10, dex: 10, sDef: 10, rDef: 10, tDef: 10, extra: "アルター・フリクト系と特定の特殊能力の合成成功率が大幅に上昇"}},
+        {group: 9, name: "エクストレセプター",   effects: {sAtk: 10, rAtk: 10, tAtk: 10, dex: 10, sDef: 10, rDef: 10, tDef: 10, extra: "アルター・フリクト系と特定の特殊能力の合成成功率を大幅に上昇"}},
         {group: 9, name: "センテンスレセプター", effects: {sAtk: 10, rAtk: 10, tAtk: 10, dex: 10, sDef: 10, rDef: 10, tDef: 10, extra: "センテンス系特殊能力の合成成功率を大幅に上昇"}},
         {group: 9, name: "フレイズレセプター",   effects: {sAtk: 10, rAtk: 10, tAtk: 10, dex: 10, sDef: 10, rDef: 10, tDef: 10, extra: "フレイズ系特殊能力の合成成功率を大幅に上昇"}},
 
@@ -309,7 +309,7 @@
 
         {group: 13, name: "フレイズ・チェイス",   effects: {extra: "状態異常のエネミーへの与ダメージが5%上昇"}},
         {group: 13, name: "フレイズ・レスポンス", effects: {extra: "通常攻撃のPP回復量が5%上昇"}},
-        {group: 13, name: "フレイズ・ウィーク",   effects: {extra: "弱点属性で攻撃した時、与ダメージが2%上昇"}},
+        {group: 13, name: "フレイズ・ウィーク",   effects: {extra: "弱点属性で攻撃した時与ダメージが2%上昇"}},
         {group: 13, name: "フレイズ・リカバリー", effects: {extra: "PPの自然回復速度が5%上昇"}},
 
         {group: 100, name: "テンプテーション",       effects: {extra: "レアドロップ倍率が10%増加"}},
@@ -317,7 +317,7 @@
         {group: 102, name: "フレッシュ・サイン",     effects: {extra: "Lv30に到達するまで取得する経験値が30%増加する"}},
         {group: 103, name: "フォトンコレクト",       effects: {extra: "状態異常と属性耐性の合成確率を上昇させる"}},
         {group: 104, name: "エンペエンブレイス",     effects: {extra: "新世武器強化時の経験値が90増加する"}},
-        {group: 105, name: "アルティメットバスター", effects: {extra: "世壊種に与えるダメージが10%上昇"}},
+        {group: 105, name: "アルティメットバスター", effects: {extra: "世壊種に与えるダメージが10%上昇する"}},
     ];
 
     var ALL_OPTIONS_CACHE_BY_NAME = {};
