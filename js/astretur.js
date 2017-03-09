@@ -214,6 +214,8 @@
         {group: 9, name: "ソールレセプター",   effects: {sAtk: 10, rAtk: 10, tAtk: 10, dex: 10, sDef: 10, rDef: 10, tDef: 10}},
         {group: 9, name: "ギフトレセプター",   effects: {sAtk: 10, rAtk: 10, tAtk: 10, dex: 10, sDef: 10, rDef: 10, tDef: 10}},
         {group: 9, name: "エクストレセプター", effects: {sAtk: 10, rAtk: 10, tAtk: 10, dex: 10, sDef: 10, rDef: 10, tDef: 10}},
+        {group: 9, name: "センテンスレセプター", effects: {sAtk: 10, rAtk: 10, tAtk: 10, dex: 10, sDef: 10, rDef: 10, tDef: 10}},
+        {group: 9, name: "フレイズレセプター", effects: {sAtk: 10, rAtk: 10, tAtk: 10, dex: 10, sDef: 10, rDef: 10, tDef: 10}},
 
         {group: 10, name: "ブロウレジストⅠ",   effects: {sRes: 3}},
         {group: 10, name: "ブロウレジストⅡ",   effects: {sRes: 4}},
