@@ -142,6 +142,7 @@
 
         {group: 6, name: "ヤマト・ファクター", effects: {hp: 20, pp: 1, sAtk: 10, rAtk: 20, tAtk: 10}},
         {group: 6, name: "マザー・ファクター", effects: {hp: 20, pp: 1, sAtk: 10, rAtk: 10, tAtk: 20}},
+        {group: 6, name: "デウス・ファクター", effects: {hp: 20, pp: 1, sAtk: 20, rAtk: 10, tAtk: 10}},
 
         {group: 7, name: "ウィンクルム",   effects: {sAtk: 20, rAtk: 20, tAtk: 20}},
         {group: 7, name: "モデュレイター", effects: {sAtk: 30, rAtk: 30, tAtk: 30}},
