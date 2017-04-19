@@ -140,6 +140,7 @@
         {group: 5, name: "センテンス・パワー",     effects: {pp: 4, sAtk: 20}},
         {group: 5, name: "センテンス・シュート",   effects: {pp: 4, rAtk: 20}},
         {group: 5, name: "センテンス・テクニック", effects: {pp: 4, tAtk: 20}},
+        {group: 5, name: "センテンス・トリプル",   effects: {sAtk: 30, rAtk: 30, tAtk: 30}},
 
         {group: 6, name: "ヤマト・ファクター", effects: {hp: 20, pp: 1, sAtk: 10, rAtk: 20, tAtk: 10}},
         {group: 6, name: "マザー・ファクター", effects: {hp: 20, pp: 1, sAtk: 10, rAtk: 10, tAtk: 20}},
