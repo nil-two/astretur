@@ -209,6 +209,7 @@
         {group: 8, name: "スピリタ・アルファ", effects: {pp: 3, dex: 30}},
         {group: 8, name: "ネッキー・スマイル", effects: {pp: 2, sAtk: 5, rAtk: 5, tAtk: 5}},
         {group: 8, name: "ドゥームブレイク",   effects: {pp: 2, sAtk: 15, rAtk: 15, tAtk: 15}},
+        {group: 8, name: "ファクター・カタリスト", effects: {hp: 10, pp: 1}},
 
         {group: 9, name: "マーク・ジョイオ",     effects: {hp: 50, sAtk: 40, rAtk: 40, tAtk: 40}},
         {group: 9, name: "マーク・カレジナ",     effects: {pp: 5, sAtk: 40, rAtk: 40, tAtk: 40}},
