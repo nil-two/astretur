@@ -90,6 +90,7 @@
         {group: 1, name: "トウオウ・ソール",       effects: {sAtk: 10, rAtk: 10, tAtk: 10, dex: 10, sDef: 10, rDef: 10, tDef: 10}},
         {group: 1, name: "ダークネス・ソール",     effects: {hp: 15, pp: 2, sAtk: 15, rAtk: 15, tAtk: 15, dex: 15, sDef: 15, rDef: 15, tDef: 15}},
         {group: 1, name: "アストラル・ソール",     effects: {hp: 35, pp: 5, sAtk: 35, rAtk: 35, tAtk: 35, dex: 35, sDef: 35, rDef: 35, tDef: 35}},
+        {group: 1, name: "エーテル・ソール",       effects: {hp: 15, pp: 2, sAtk: 15, rAtk: 15, tAtk: 15, dex: 15, sDef: 15, rDef: 15, tDef: 15}},
 
         {group: 2, name: "ラヴィ・フィーバー",   effects: {hp: 10, sAtk: 10, dex: 5}},
         {group: 2, name: "セレモ・フィーバー",   effects: {hp: 5, pp: 1, sAtk: 10, dex: 5}},
@@ -139,10 +140,12 @@
         {group: 5, name: "センテンス・パワー",     effects: {pp: 4, sAtk: 20}},
         {group: 5, name: "センテンス・シュート",   effects: {pp: 4, rAtk: 20}},
         {group: 5, name: "センテンス・テクニック", effects: {pp: 4, tAtk: 20}},
+        {group: 5, name: "センテンス・トリプル",   effects: {sAtk: 30, rAtk: 30, tAtk: 30}},
 
         {group: 6, name: "ヤマト・ファクター", effects: {hp: 20, pp: 1, sAtk: 10, rAtk: 20, tAtk: 10}},
         {group: 6, name: "マザー・ファクター", effects: {hp: 20, pp: 1, sAtk: 10, rAtk: 10, tAtk: 20}},
         {group: 6, name: "デウス・ファクター", effects: {hp: 20, pp: 1, sAtk: 20, rAtk: 10, tAtk: 10}},
+        {group: 6, name: "エーテル・ファクター", effects: {hp: 10, pp: 6, sAtk: 30, rAtk: 30, tAtk: 30, dex: 30, sDef: 30, rDef: 30, tDef: 30}},
 
         {group: 7, name: "ウィンクルム",   effects: {sAtk: 20, rAtk: 20, tAtk: 20}},
         {group: 7, name: "モデュレイター", effects: {sAtk: 30, rAtk: 30, tAtk: 30}},
@@ -207,6 +210,7 @@
         {group: 8, name: "スピリタ・アルファ", effects: {pp: 3, dex: 30}},
         {group: 8, name: "ネッキー・スマイル", effects: {pp: 2, sAtk: 5, rAtk: 5, tAtk: 5}},
         {group: 8, name: "ドゥームブレイク",   effects: {pp: 2, sAtk: 15, rAtk: 15, tAtk: 15}},
+        {group: 8, name: "ファクター・カタリスト", effects: {hp: 10, pp: 1}},
 
         {group: 9, name: "マーク・ジョイオ",     effects: {hp: 50, sAtk: 40, rAtk: 40, tAtk: 40}},
         {group: 9, name: "マーク・カレジナ",     effects: {pp: 5, sAtk: 40, rAtk: 40, tAtk: 40}},
@@ -319,6 +323,7 @@
         {group: 103, name: "フォトンコレクト",       effects: {extra: "状態異常と属性耐性の合成確率を上昇させる"}},
         {group: 104, name: "エンペエンブレイス",     effects: {extra: "新世武器強化時の経験値が90増加する"}},
         {group: 105, name: "アルティメットバスター", effects: {extra: "世壊種に与えるダメージが10%上昇する"}},
+        {group: 106, name: "NTウェポンブースト",     effects: {extra: "新世武器強化時の経験値が800増加する"}},
     ];
 
     var ALL_OPTIONS_CACHE_BY_NAME = {};
