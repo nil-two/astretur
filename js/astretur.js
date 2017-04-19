@@ -144,6 +144,7 @@
         {group: 6, name: "ヤマト・ファクター", effects: {hp: 20, pp: 1, sAtk: 10, rAtk: 20, tAtk: 10}},
         {group: 6, name: "マザー・ファクター", effects: {hp: 20, pp: 1, sAtk: 10, rAtk: 10, tAtk: 20}},
         {group: 6, name: "デウス・ファクター", effects: {hp: 20, pp: 1, sAtk: 20, rAtk: 10, tAtk: 10}},
+        {group: 6, name: "エーテル・ファクター", effects: {hp: 10, pp: 6, sAtk: 30, rAtk: 30, tAtk: 30, dex: 30, sDef: 30, rDef: 30, tDef: 30}},
 
         {group: 7, name: "ウィンクルム",   effects: {sAtk: 20, rAtk: 20, tAtk: 20}},
         {group: 7, name: "モデュレイター", effects: {sAtk: 30, rAtk: 30, tAtk: 30}},
