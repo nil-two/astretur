@@ -323,6 +323,7 @@
         {group: 103, name: "フォトンコレクト",       effects: {extra: "状態異常と属性耐性の合成確率を上昇させる"}},
         {group: 104, name: "エンペエンブレイス",     effects: {extra: "新世武器強化時の経験値が90増加する"}},
         {group: 105, name: "アルティメットバスター", effects: {extra: "世壊種に与えるダメージが10%上昇する"}},
+        {group: 106, name: "NTウェポンブースト",     effects: {extra: "新世武器強化時の経験値が800増加する"}},
     ];
 
     var ALL_OPTIONS_CACHE_BY_NAME = {};
