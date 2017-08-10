@@ -92,6 +92,7 @@
         {group: 1, name: "アストラル・ソール",     effects: {hp: 35, pp: 5, sAtk: 35, rAtk: 35, tAtk: 35, dex: 35, sDef: 35, rDef: 35, tDef: 35}},
         {group: 1, name: "エーテル・ソール",       effects: {hp: 15, pp: 2, sAtk: 15, rAtk: 15, tAtk: 15, dex: 15, sDef: 15, rDef: 15, tDef: 15}},
         {group: 1, name: "ファーブラ・ソール",     effects: {hp: 15, pp: 2, sAtk: 15, rAtk: 15, tAtk: 15, dex: 15, sDef: 15, rDef: 15, tDef: 15}},
+        {group: 1, name: "アレス・ジ・ソール",     effects: {hp: 35, pp: 3, sAtk: 25, rAtk: 25, tAtk: 25}},
 
         {group: 2, name: "ラヴィ・フィーバー",   effects: {hp: 10, sAtk: 10, dex: 5}},
         {group: 2, name: "セレモ・フィーバー",   effects: {hp: 5, pp: 1, sAtk: 10, dex: 5}},
