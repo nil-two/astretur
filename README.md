@@ -2,7 +2,7 @@ astretur
 ========
 
 A special-ability simulator of [pso2](http://pso2.jp/).
-App is [here](https://nil2nekoni.github.io/astretur/).
+App is [here](https://nil-two.github.io/astretur/).
 
 License
 -------
